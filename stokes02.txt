@@ -1,0 +1,156 @@
+Building configuration...
+
+Current configuration : 3501 bytes
+!
+! Last configuration change at 11:08:01 JST Mon Mar 1 1993
+! NVRAM config last updated at 23:05:33 JST Wed Dec 25 2019
+!
+version 15.0
+no service pad
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname stokes02
+!
+boot-start-marker
+boot-end-marker
+!
+!
+enable password cisco
+!
+no aaa new-model
+clock timezone JST 9 0
+system mtu routing 1500
+!
+!
+!
+!
+!
+crypto pki trustpoint TP-self-signed-3877309824
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-3877309824
+ revocation-check none
+ rsakeypair TP-self-signed-3877309824
+!
+!
+crypto pki certificate chain TP-self-signed-3877309824
+ certificate self-signed 01
+  3082022B 30820194 A0030201 02020101 300D0609 2A864886 F70D0101 05050030 
+  31312F30 2D060355 04031326 494F532D 53656C66 2D536967 6E65642D 43657274 
+  69666963 6174652D 33383737 33303938 3234301E 170D3933 30333031 30303031 
+  31305A17 0D323030 31303130 30303030 305A3031 312F302D 06035504 03132649 
+  4F532D53 656C662D 5369676E 65642D43 65727469 66696361 74652D33 38373733 
+  30393832 3430819F 300D0609 2A864886 F70D0101 01050003 818D0030 81890281 
+  8100B78F EA142E4C DA26630C A1E09416 ADBAC614 5E17F692 D3C3BAE8 DCFD56A5 
+  DB67EDBA 497FD5E7 958F8BFE EB1319D8 995BB74C EF06DDA8 DAAB0F13 4ECB8CCA 
+  D754B91E F2D1F407 114273F1 D5904092 EC6E5CF5 9A046765 D314897F D5B7CCC7 
+  D2E16972 53B02C29 6E8F1C51 15119DE1 46CE8FBE 3E0AF20E 44A1580D F6DC85A8 
+  5E4B0203 010001A3 53305130 0F060355 1D130101 FF040530 030101FF 301F0603 
+  551D2304 18301680 146505A5 9D8DC009 3FA73C99 10C0DDAE E055DEE5 37301D06 
+  03551D0E 04160414 6505A59D 8DC0093F A73C9910 C0DDAEE0 55DEE537 300D0609 
+  2A864886 F70D0101 05050003 8181001F 1E8A566C 8014AB0E 4F673CC8 16FC6955 
+  B218DD11 15EB8FC1 04F99D8A 51C78569 7A9EF36A 75DBB336 BC1E7832 398F1D41 
+  906B0D01 FDE68F97 4090ED88 144C4B5F 3B7E91D3 375EA561 7B8FD988 2B7F7A6E 
+  245CF023 6E057A12 FDFBFD2D C49AA263 A320192B 2F0563A0 6FF88BCF 3DFFEBF6 
+  CA041A7B 0E9AD7F0 5AFF34ED 1D7E49
+  	quit
+!
+!
+!
+!
+!
+spanning-tree mode pvst
+spanning-tree extend system-id
+!
+vlan internal allocation policy ascending
+!
+!
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Port-channel10
+ switchport access vlan 10
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ switchport nonegotiate
+!
+interface FastEthernet0/1
+ switchport access vlan 10
+!
+interface FastEthernet0/2
+ switchport access vlan 10
+!
+interface FastEthernet0/3
+ switchport access vlan 10
+ switchport mode access
+!
+interface FastEthernet0/4
+ switchport access vlan 10
+ switchport mode access
+!
+interface FastEthernet0/5
+!
+interface FastEthernet0/6
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ switchport nonegotiate
+ channel-group 10 mode on
+!
+interface FastEthernet0/7
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ switchport nonegotiate
+ channel-group 10 mode on
+!
+interface FastEthernet0/8
+ switchport access vlan 10
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ switchport nonegotiate
+ channel-group 10 mode on
+!
+interface GigabitEthernet0/1
+ switchport access vlan 10
+!
+interface Vlan1
+ no ip address
+!
+interface Vlan10
+ ip address 192.168.0.101 255.255.255.0
+!
+ip default-gateway 192.168.0.1
+ip http server
+ip http secure-server
+!
+!
+!
+kron occurrence backup at 1:00 oneshot
+ policy-list backup
+!
+kron policy-list backup
+ cli show running-config | redirect tftp://192.168.0.21/stokes02.txt
+!
+!
+!
+!
+line con 0
+line vty 0 4
+ password 123456
+ login
+ length 0
+line vty 5 15
+ login
+!
+end
+

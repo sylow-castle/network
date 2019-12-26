@@ -1,0 +1,167 @@
+Building configuration...
+
+Current configuration : 3761 bytes
+!
+! Last configuration change at 22:58:01 JST Wed Dec 25 2019
+! NVRAM config last updated at 23:06:00 JST Wed Dec 25 2019
+!
+version 15.0
+no service pad
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname stokes01
+!
+boot-start-marker
+boot-end-marker
+!
+!
+enable password cisco
+!
+no aaa new-model
+clock timezone JST 9 0
+system mtu routing 1500
+vtp mode transparent
+!
+!
+!
+!
+!
+crypto pki trustpoint TP-self-signed-3877297408
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-3877297408
+ revocation-check none
+ rsakeypair TP-self-signed-3877297408
+!
+!
+crypto pki certificate chain TP-self-signed-3877297408
+ certificate self-signed 01
+  3082022B 30820194 A0030201 02020101 300D0609 2A864886 F70D0101 05050030 
+  31312F30 2D060355 04031326 494F532D 53656C66 2D536967 6E65642D 43657274 
+  69666963 6174652D 33383737 32393734 3038301E 170D3933 30333031 30303031 
+  31315A17 0D323030 31303130 30303030 305A3031 312F302D 06035504 03132649 
+  4F532D53 656C662D 5369676E 65642D43 65727469 66696361 74652D33 38373732 
+  39373430 3830819F 300D0609 2A864886 F70D0101 01050003 818D0030 81890281 
+  8100B96F F06BC8EF B49FA639 10608B96 E357A563 F5F48047 D880CD40 D35B0812 
+  B661E795 1C1E82E7 A57D55A3 9B27BCD5 D4D22426 334B8CE6 A5ECC7CE D67732B7 
+  F2873718 18ED6ADB 6CFDA35B 14741FCA B31F7EE7 15EFD9A1 3552DC2C C3843C8B 
+  F2F33F85 A8EC6760 A964F815 4173B14B 1DE20565 5956B6FD 2882338A 1A60A866 
+  37490203 010001A3 53305130 0F060355 1D130101 FF040530 030101FF 301F0603 
+  551D2304 18301680 14B3BCBC E53D671C A843531B 0CBDD14C 177F9C47 02301D06 
+  03551D0E 04160414 B3BCBCE5 3D671CA8 43531B0C BDD14C17 7F9C4702 300D0609 
+  2A864886 F70D0101 05050003 81810065 16098331 B6908E55 BFCEDDF7 3D9713A0 
+  E83CCF22 7758E97D FE939B19 429C829E 8B445118 C01BD334 955A1316 B79AE88D 
+  D632B2A4 3419E40E 391FF561 BF032A70 F5BDF846 BB18DB84 D06D57B0 E7E474FF 
+  8FCF7C2B F5E162B6 BD196317 28D7360E C89FD4E6 27898E22 14F5B5D4 3EB9A623 
+  88A10B48 D615ED8C 282AA3C0 0AD737
+  	quit
+!
+!
+!
+!
+!
+spanning-tree mode pvst
+spanning-tree extend system-id
+!
+vlan internal allocation policy ascending
+!
+vlan 10,20 
+!
+!
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Port-channel10
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ switchport nonegotiate
+!
+interface FastEthernet0/1
+ switchport access vlan 10
+ switchport mode access
+!
+interface FastEthernet0/2
+ switchport access vlan 10
+ switchport mode access
+!
+interface FastEthernet0/3
+ switchport access vlan 10
+ switchport mode access
+!
+interface FastEthernet0/4
+ switchport access vlan 10
+ switchport mode access
+!
+interface FastEthernet0/5
+ switchport access vlan 10
+ switchport mode access
+!
+interface FastEthernet0/6
+ switchport access vlan 10
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ switchport nonegotiate
+ channel-group 10 mode on
+!
+interface FastEthernet0/7
+ switchport access vlan 10
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ switchport nonegotiate
+ channel-group 10 mode on
+!
+interface FastEthernet0/8
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ switchport nonegotiate
+ channel-group 10 mode on
+!
+interface GigabitEthernet0/1
+ switchport access vlan 10
+ switchport mode access
+!
+interface Vlan1
+ no ip address
+!
+interface Vlan10
+ ip address 192.168.0.100 255.255.255.0
+!
+ip default-gateway 192.168.0.1
+ip http server
+ip http secure-server
+!
+!
+!
+kron occurrence daily at 1:00 oneshot
+ policy-list backup
+!
+kron policy-list dayly-backup
+ cli show runnning-config | redirect tftp://192.168.0.21/stokes01.txt
+!
+kron policy-list backup
+ cli show running-config | redirect tftp://192.168.0.21/stokes01.txt
+!
+!
+!
+!
+line con 0
+line vty 0 4
+ password 123456
+ login
+ length 0
+line vty 5 15
+ login
+!
+end
+

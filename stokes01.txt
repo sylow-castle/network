@@ -1,9 +1,9 @@
 Building configuration...
 
-Current configuration : 3761 bytes
+Current configuration : 3764 bytes
 !
-! Last configuration change at 22:58:01 JST Wed Dec 25 2019
-! NVRAM config last updated at 23:06:00 JST Wed Dec 25 2019
+! Last configuration change at 22:16:27 JST Thu Dec 26 2019
+! NVRAM config last updated at 22:20:34 JST Thu Dec 26 2019
 !
 version 15.0
 no service pad
@@ -143,7 +143,7 @@ ip http secure-server
 !
 !
 !
-kron occurrence daily at 1:00 oneshot
+kron occurrence backup at 1:00 recurring
  policy-list backup
 !
 kron policy-list dayly-backup

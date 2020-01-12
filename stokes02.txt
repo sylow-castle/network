@@ -1,9 +1,8 @@
 Building configuration...
 
-Current configuration : 3501 bytes
+Current configuration : 3423 bytes
 !
-! Last configuration change at 11:08:01 JST Mon Mar 1 1993
-! NVRAM config last updated at 23:05:33 JST Wed Dec 25 2019
+! Last configuration change at 22:58:33 JST Tue Jan 7 2020
 !
 version 15.0
 no service pad
@@ -80,7 +79,6 @@ vlan internal allocation policy ascending
 !
 !
 interface Port-channel10
- switchport access vlan 10
  switchport trunk encapsulation dot1q
  switchport mode trunk
  switchport nonegotiate
@@ -135,11 +133,11 @@ ip http secure-server
 !
 !
 !
-kron occurrence backup at 1:00 oneshot
+kron occurrence backup at 1:00 recurring
  policy-list backup
 !
 kron policy-list backup
- cli show running-config | redirect tftp://192.168.0.21/stokes02.txt
+ cli show running-config | redirect tftp://192.168.0.21/config/stokes02.txt
 !
 !
 !

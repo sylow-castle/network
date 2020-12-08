@@ -1,4 +1,8 @@
+Building configuration...
 
+Current configuration : 2448 bytes
+!
+! Last configuration change at 13:23:19 UTC Mon Dec 7 2020
 !
 version 15.7
 service timestamps debug datetime msec
@@ -78,56 +82,83 @@ interface BRI0
  isdn termination multidrop
 !
 interface FastEthernet0
- switchport access vlan 10
+ switchport mode trunk
  no ip address
 !
 interface FastEthernet1
+ switchport access vlan 10
+ switchport trunk native vlan 10
+ switchport mode access
  no ip address
 !
 interface FastEthernet2
+ switchport trunk native vlan 10
+ switchport mode trunk
  no ip address
 !
 interface FastEthernet3
+ switchport mode trunk
  no ip address
 !
 interface FastEthernet4
+ switchport mode trunk
  no ip address
 !
 interface FastEthernet5
+ switchport mode trunk
  no ip address
 !
 interface FastEthernet6
+ switchport mode trunk
  no ip address
 !
 interface FastEthernet7
+ switchport mode trunk
  no ip address
 !
 interface FastEthernet8
- no ip address
- shutdown
+ ip address dhcp
  duplex auto
  speed auto
+!
+interface FastEthernet8.2
+ description Vlan10
+ encapsulation dot1Q 10
+!
+interface FastEthernet8.3
+ encapsulation dot1Q 20
 !
 interface GigabitEthernet0
  no ip address
- shutdown
  duplex auto
  speed auto
 !
+interface GigabitEthernet0.1
+!
 interface Vlan1
- no ip address
+ ip address 192.168.1.2 255.255.255.0
 !
 interface Vlan10
- ip address 192.168.0.111 255.255.255.0
+ ip address 192.168.0.2 255.255.255.0
 !
-ip default-gateway 192.168.0.1
+interface Vlan20
+ ip address 192.168.20.111 255.255.255.0
+!
+ip default-gateway 192.168.1.214
 ip forward-protocol nd
 no ip http server
 no ip http secure-server
 !
 !
+ip route 0.0.0.0 0.0.0.0 192.168.1.1
 ip ssh server algorithm encryption aes128-ctr aes192-ctr aes256-ctr
 ip ssh client algorithm encryption aes128-ctr aes192-ctr aes256-ctr
+!
+kron occurrence backup at 1:00 recurring
+ policy-list backup
+!
+kron policy-list backup
+ cli show running-config | redirect tftp://192.168.0.21/config/riemann01.txt
 !
 ipv6 ioam timestamp
 !
@@ -156,7 +187,9 @@ line aux 0
 line vty 0 4
  password 123456
  login
+ length 0
  transport input telnet
 !
 !
 end
+

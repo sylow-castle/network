@@ -1,9 +1,8 @@
 Building configuration...
 
-Current configuration : 3695 bytes
+Current configuration : 3802 bytes
 !
-! Last configuration change at 22:32:25 JST Tue Jan 7 2020
-! NVRAM config last updated at 22:20:34 JST Thu Dec 26 2019
+! Last configuration change at 18:43:12 JST Tue Apr 6 1993
 !
 version 15.0
 no service pad
@@ -90,7 +89,8 @@ interface Port-channel10
 !
 interface FastEthernet0/1
  switchport access vlan 10
- switchport mode access
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
 !
 interface FastEthernet0/2
  switchport access vlan 10
@@ -136,7 +136,10 @@ interface Vlan1
  no ip address
 !
 interface Vlan10
- ip address 192.168.0.100 255.255.255.0
+ no ip address
+!
+interface Vlan20
+ ip address 192.168.20.101 255.255.255.0
 !
 ip default-gateway 192.168.0.1
 ip http server
@@ -147,8 +150,11 @@ ip http secure-server
 kron occurrence backup at 1:00 recurring
  policy-list backup
 !
+kron policy-list dayly-backup
+ cli show runnning-config | redirect tftp://192.168.0.21/stokes01.txt
+!
 kron policy-list backup
- cli show running-config | redirect tftp://192.168.0.21/config/stokes01.txt
+ cli show running-config | redirect tftp://192.168.0.21/stokes01.txt
 !
 !
 !

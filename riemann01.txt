@@ -1,8 +1,8 @@
 Building configuration...
 
-Current configuration : 2476 bytes
+Current configuration : 2474 bytes
 !
-! Last configuration change at 13:30:08 UTC Mon Jan 4 2021
+! Last configuration change at 14:55:51 UTC Tue Jan 5 2021
 !
 version 15.7
 service timestamps debug datetime msec
@@ -144,7 +144,7 @@ interface Vlan10
 interface Vlan20
  ip address 192.168.20.111 255.255.255.0
 !
-ip default-gateway 192.168.1.214
+ip default-gateway 192.168.0.1
 ip forward-protocol nd
 no ip http server
 no ip http secure-server

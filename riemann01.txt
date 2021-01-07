@@ -1,8 +1,8 @@
 Building configuration...
 
-Current configuration : 2474 bytes
+Current configuration : 2386 bytes
 !
-! Last configuration change at 14:55:51 UTC Tue Jan 5 2021
+! Last configuration change at 13:27:28 UTC Wed Jan 6 2021
 !
 version 15.7
 service timestamps debug datetime msec
@@ -150,8 +150,6 @@ no ip http server
 no ip http secure-server
 !
 !
-ip route 0.0.0.0 0.0.0.0 192.168.1.1
-ip route 192.168.20.0 255.255.255.0 192.168.20.101
 ip ssh server algorithm encryption aes128-ctr aes192-ctr aes256-ctr
 ip ssh client algorithm encryption aes128-ctr aes192-ctr aes256-ctr
 !

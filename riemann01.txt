@@ -1,8 +1,8 @@
 Building configuration...
 
-Current configuration : 2386 bytes
+Current configuration : 2555 bytes
 !
-! Last configuration change at 13:27:28 UTC Wed Jan 6 2021
+! Last configuration change at 12:46:41 UTC Sun Feb 7 2021
 !
 version 15.7
 service timestamps debug datetime msec
@@ -38,6 +38,12 @@ no aaa new-model
 
 
 !
+ip dhcp excluded-address 192.168.0.15 192.168.0.99
+!
+ip dhcp pool 0-POOL
+ network 192.168.0.0 255.255.255.0
+ default-router 192.168.0.1 
+ dns-server 1.1.1.1 
 !
 !
 !
@@ -87,13 +93,10 @@ interface FastEthernet0
 !
 interface FastEthernet1
  switchport access vlan 10
- switchport trunk native vlan 10
  switchport mode access
  no ip address
 !
 interface FastEthernet2
- switchport trunk native vlan 10
- switchport mode trunk
  no ip address
 !
 interface FastEthernet3
@@ -101,7 +104,7 @@ interface FastEthernet3
  no ip address
 !
 interface FastEthernet4
- switchport mode trunk
+ switchport mode access
  no ip address
 !
 interface FastEthernet5
@@ -117,7 +120,7 @@ interface FastEthernet7
  no ip address
 !
 interface FastEthernet8
- ip address dhcp
+ ip address 192.168.1.211 255.255.255.0
  duplex auto
  speed auto
 !
@@ -139,17 +142,21 @@ interface Vlan1
  no ip address
 !
 interface Vlan10
- ip address 192.168.0.2 255.255.255.0
+ ip address 192.168.0.1 255.255.255.0
 !
 interface Vlan20
  ip address 192.168.20.111 255.255.255.0
 !
-ip default-gateway 192.168.0.1
+router rip
+ version 2
+ network 192.168.1.0
+!
 ip forward-protocol nd
 no ip http server
 no ip http secure-server
 !
 !
+ip route 0.0.0.0 0.0.0.0 192.168.1.1
 ip ssh server algorithm encryption aes128-ctr aes192-ctr aes256-ctr
 ip ssh client algorithm encryption aes128-ctr aes192-ctr aes256-ctr
 !
@@ -162,6 +169,7 @@ kron policy-list backup
 ipv6 ioam timestamp
 !
 !
+access-list 1 permit any
 !
 control-plane
 !

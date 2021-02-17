@@ -1,8 +1,8 @@
 Building configuration...
 
-Current configuration : 2555 bytes
+Current configuration : 2667 bytes
 !
-! Last configuration change at 12:46:41 UTC Sun Feb 7 2021
+! Last configuration change at 15:25:28 UTC Tue Feb 16 2021
 !
 version 15.7
 service timestamps debug datetime msec
@@ -116,11 +116,12 @@ interface FastEthernet6
  no ip address
 !
 interface FastEthernet7
- switchport mode trunk
+ switchport mode access
+ switchport nonegotiate
  no ip address
 !
 interface FastEthernet8
- ip address 192.168.1.211 255.255.255.0
+ no ip address
  duplex auto
  speed auto
 !
@@ -139,13 +140,16 @@ interface GigabitEthernet0
 interface GigabitEthernet0.1
 !
 interface Vlan1
- no ip address
+ ip address dhcp
 !
 interface Vlan10
- ip address 192.168.0.1 255.255.255.0
+ ip address 192.168.0.2 255.255.255.0
 !
 interface Vlan20
  ip address 192.168.20.111 255.255.255.0
+!
+interface Vlan100
+ no ip address
 !
 router rip
  version 2
@@ -157,6 +161,8 @@ no ip http secure-server
 !
 !
 ip route 0.0.0.0 0.0.0.0 192.168.1.1
+ip route 0.0.0.0 0.0.0.0 182.168.0.1
+ip route 0.0.0.0 0.0.0.0 192.168.0.1
 ip ssh server algorithm encryption aes128-ctr aes192-ctr aes256-ctr
 ip ssh client algorithm encryption aes128-ctr aes192-ctr aes256-ctr
 !

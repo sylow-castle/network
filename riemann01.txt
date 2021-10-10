@@ -1,8 +1,8 @@
 Building configuration...
 
-Current configuration : 2682 bytes
+Current configuration : 2617 bytes
 !
-! Last configuration change at 14:28:28 UTC Wed Oct 6 2021
+! Last configuration change at 04:17:21 UTC Sat Oct 9 2021
 !
 version 15.7
 service timestamps debug datetime msec
@@ -89,6 +89,7 @@ interface BRI0
  isdn termination multidrop
 !
 interface FastEthernet0
+ switchport trunk native vlan 10
  switchport mode trunk
  no ip address
 !
@@ -126,31 +127,21 @@ interface FastEthernet8
  duplex auto
  speed auto
 !
-interface FastEthernet8.2
- description Vlan10
+interface FastEthernet8.10
  encapsulation dot1Q 10
-!
-interface FastEthernet8.3
- encapsulation dot1Q 20
 !
 interface GigabitEthernet0
  no ip address
  duplex auto
  speed auto
 !
-interface GigabitEthernet0.1
-!
 interface Vlan1
  ip address dhcp
 !
 interface Vlan10
- ip address 192.168.0.2 255.255.255.0
-!
-interface Vlan20
- ip address 192.168.20.111 255.255.255.0
-!
-interface Vlan100
- no ip address
+ ip address 192.168.0.111 255.255.255.0 secondary
+ ip address 192.168.0.2 255.255.255.0 secondary
+ ip address 192.168.0.10 255.255.255.0
 !
 router rip
  version 2
